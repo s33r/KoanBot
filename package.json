@@ -4,7 +4,7 @@
   "description": "A robotic zen master",
   "main": "index.js",
   "scripts": {
-    "run": "node index"
+    "run": "node server"
   },
   "repository": {
     "type": "git",

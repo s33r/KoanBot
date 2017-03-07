@@ -37,7 +37,6 @@ var connectorConfig = (function() {
 })();
 
 
-
 kbase.initialize();
 
 // Setup Restify Server
