@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "A robotic zen master",
   "main": "index.js",
-  "scripts": {
-    "run": "node server"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/s33r/KoanBot.git"
