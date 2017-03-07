@@ -41,9 +41,14 @@ kbase.initialize();
 
 // Setup Restify Server
 var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-    console.log('%s listening to %s', server.name, server.url);
-});
+
+server.get(/.*/, restify.serveStatic({
+    'directory': '.',
+    'default': 'index.html'
+}));
+
+
+
 
 // Create chat bot
 var connector = new builder.ChatConnector(connectorConfig);
@@ -56,4 +61,9 @@ server.post('/api/messages', connector.listen());
 
 bot.dialog('/', function (session) {
     session.send(kbase.getKoan(session.message.text));
+});
+
+
+server.listen(process.env.port || process.env.PORT || 3978, function () {
+    console.log('%s listening to %s', server.name, server.url);
 });
