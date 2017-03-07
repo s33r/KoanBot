@@ -1,0 +1,24 @@
+{
+  "name": "koan-bot",
+  "version": "1.0.0",
+  "description": "A robotic zen master",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s33r/KoanBot.git"
+  },
+  "author": "Aaron Willows",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/s33r/KoanBot/issues"
+  },
+  "homepage": "https://github.com/s33r/KoanBot#readme",
+  "dependencies": {
+    "botbuilder": "^3.7.0",
+    "lodash": "^4.17.4",
+    "restify": "^4.3.0"
+  }
+}
