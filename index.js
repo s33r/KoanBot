@@ -1,18 +1,42 @@
 ﻿var restify = require('restify');
 var builder = require('botbuilder');
-
-var debug = require('./debug.conf');
 var kbase = require('./koanBot/kbase');
 
-var connectorConfig = {};
+var debug = (function () {
+    try {
+        var result = require('./debug.conf');
 
-if (!!debug) {
-    connectorConfig.appId = debug.id;
-    connectorConfig.appPassword = debug.password;
-} else {
-    connectorConfig.appId = process.env.MICROSOFT_APP_ID;
-    connectorConfig.appPassword = process.env.MICROSOFT_APP_PASSWORD;
-}
+        console.warn('In local debug mode.');
+
+        return result;
+    } catch (error) {
+        return null;
+    }
+})();
+
+var connectorConfig = (function() {
+    if (!!debug) {
+        return {
+            appId: debug.id,
+            appPassword: debug.password
+        };
+    } else {
+        if (!process.env.MICROSOFT_APP_ID) {
+            console.warn('No App ID found.');
+        }
+
+        if (!process.env.MICROSOFT_APP_PASSWORD) {
+            console.warn('No App Password found.');
+        }
+
+        return {
+            appId: process.env.MICROSOFT_APP_ID,
+            appPassword: process.env.MICROSOFT_APP_PASSWORD
+        };
+    }
+})();
+
+
 
 kbase.initialize();
 

@@ -1,5 +1,8 @@
 #Local Debug
 *.conf
+*.sln
+.vs
+
 # Logs
 logs
 *.log
