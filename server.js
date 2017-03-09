@@ -1,6 +1,9 @@
 ﻿var restify = require('restify');
-var builder = require('botbuilder');
-var kbase = require('./koanBot/kbase');
+
+
+
+var bot = require('./koanBot/bot');
+var directLine = require('./koanBot/directLine');
 
 var debug = (function () {
     try {
@@ -36,34 +39,21 @@ var connectorConfig = (function() {
     }
 })();
 
-
-kbase.initialize();
-
-// Setup Restify Server
-var server = restify.createServer();
-
-server.get(/.*/, restify.serveStatic({
-    'directory': '.',
-    'default': 'index.html'
-}));
-
-
-
-
-// Create chat bot
-var connector = new builder.ChatConnector(connectorConfig);
-var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
-
-//=========================================================
-// Bots Dialogs
-//=========================================================
-
-bot.dialog('/', function (session) {
-    session.send(kbase.getKoan(session.message.text));
-});
+var directLineConfig = (function () {
+    if (!!debug) {
+        return {
+            secret: debug.directLineSecret
+        };
+    } else {
+        if (!process.env.AARON_DIRECT_LINE_SECRET) {
+            console.warn('No Direct Line Secret found.');
+        }
+        return {
+            secret: process.env.AARON_DIRECT_LINE_SECRET,
+        };
+    }
+})();
 
 
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-    console.log('%s listening to %s', server.name, server.url);
-});
+bot.start(connectorConfig, directLineConfig);
+directLine.start();
